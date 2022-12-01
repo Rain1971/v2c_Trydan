@@ -24,21 +24,21 @@ if connection:
   valor = cliente.read_holding_registers( 0x0BC7, 2, unit=1 )
   if valor:
     READ_ADDRESS_PWM_VALUE = regeneraFloat( valor )
-    print( 'READ_ADDRESS_PWM_VALUE: {}'.format(int(READ_ADDRESS_PWM_VALUE)) )
+    print( 'READ_ADDRESS_PWM_VALUE: {}'.format(READ_ADDRESS_PWM_VALUE) )
 
   valor = cliente.read_holding_registers( 0x0BC8, 2, unit=1 )
   if valor:
     READ_ADDRESS_HOUSE_POWER = regeneraFloat( valor )
-    print( 'READ_ADDRESS_HOUSE_POWER: {}'.format(int(READ_ADDRESS_HOUSE_POWER)) )
+    print( 'READ_ADDRESS_HOUSE_POWER: {}'.format(READ_ADDRESS_HOUSE_POWER) )
 
   valor = cliente.read_holding_registers( 0x0BC9, 2, unit=1 )
   if valor:
     READ_ADDRESS_FV_POWER = regeneraFloat( valor )
-    print( 'READ_ADDRESS_FV_POWER: {}'.format(int(READ_ADDRESS_FV_POWER)) )
+    print( 'READ_ADDRESS_FV_POWER: {}'.format(READ_ADDRESS_FV_POWER) )
 
   valor = cliente.read_holding_registers( 0x0BCA, 2, unit=1 )
   if valor:
     READ_ADDRESS_PAUSE = regeneraFloat( valor )
-    print( 'READ_ADDRESS_PAUSE: {}'.format(int(READ_ADDRESS_PAUSE)) )
+    print( 'READ_ADDRESS_PAUSE: {}'.format(READ_ADDRESS_PAUSE) )
 
 
