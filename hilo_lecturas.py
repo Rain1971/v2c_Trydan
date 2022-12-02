@@ -52,7 +52,7 @@ class LecturaDatos(threading.Thread):
         connection = cliente.connect()
 
         while self.isRunning:
-            time.sleep(1)
+            time.sleep(5)
             try:
               if connection:
                 for direccion in list( self.dirs ):
