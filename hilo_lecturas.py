@@ -23,8 +23,16 @@ class LecturaDatos(threading.Thread):
                   'READ_ADDRESS_SLAVE_ERROR': 0, 'READ_ADDRESS_CHARGE_TIME': 0, 'READ_ADDRESS_PWM_VALUE': 0, 
                   'READ_ADDRESS_HOUSE_POWER': 0, 'READ_ADDRESS_FV_POWER': 0, 'READ_ADDRESS_PAUSE': 0,
                   'READ_ADDRESS_LOCK': 0, 'READ_ADDRESS_PROMGRAM': 0, 'READ_ADDRESS_INTENSITY': 0,
-                  'READ_ADDRESS_DYNAMIC': 0, 'READ_ADDRESS_PAYMENT': 0, 'READ_ADDRESS_OCPP': 0}
+                  'READ_ADDRESS_DYNAMIC': 0, 'READ_ADDRESS_PAYMENT': 0, 'READ_ADDRESS_OCPP': 0, 
+                  'WRITE_ADDRESS_MIN_INTENSITY': 0, 'WRITE_ADDRESS_MAX_INTENSITY': 0}
     
+    self.dirs  = {'READ_ADDRESS_CHARGE_STATE': 0x0BC2, 'READ_ADDRESS_CHARGE_POWER': 0x0BC3, 'READ_ADDRESS_CHARGE_ENERGY': 0x0BC4, 
+                  'READ_ADDRESS_SLAVE_ERROR': 0x0BC5, 'READ_ADDRESS_CHARGE_TIME': 0x0BC6, 'READ_ADDRESS_PWM_VALUE': 0x0BC7, 
+                  'READ_ADDRESS_HOUSE_POWER': 0x0BC8, 'READ_ADDRESS_FV_POWER': 0x0BC9, 'READ_ADDRESS_PAUSE': 0x0BCA,
+                  'READ_ADDRESS_LOCK': 0x0BCB, 'READ_ADDRESS_PROMGRAM': 0x0BCC, 'READ_ADDRESS_INTENSITY': 0x0BCD,
+                  'READ_ADDRESS_DYNAMIC': 0x0BCE, 'READ_ADDRESS_PAYMENT': 0x0BCF, 'READ_ADDRESS_OCPP': 0x0BD0,
+                  'READ_ADDRESS_MIN_INTENSITY': 0x0BD1, 'WRITE_ADDRESS_MAX_INTENSITY': 0x0BD2}
+        
   def stop(self):
     self.isRunning = False
       
@@ -47,52 +55,11 @@ class LecturaDatos(threading.Thread):
             time.sleep(1)
             try:
               if connection:
-                valor = cliente.read_holding_registers( 0x0BC2, 2, unit=1 )
-                if valor:
-                  self.datos['READ_ADDRESS_CHARGE_STATE'] = self.regeneraFloat( valor )
-                valor = cliente.read_holding_registers( 0x0BC3, 2, unit=1 )
-                if valor:
-                  self.datos['READ_ADDRESS_CHARGE_POWER'] = self.regeneraFloat( valor )
-                valor = cliente.read_holding_registers( 0x0BC4, 2, unit=1 )
-                if valor:
-                  self.datos['READ_ADDRESS_CHARGE_ENERGY'] = self.regeneraFloat( valor )
-                valor = cliente.read_holding_registers( 0x0BC5, 2, unit=1 )
-                if valor:
-                  self.datos['READ_ADDRESS_SLAVE_ERROR'] = self.regeneraFloat( valor )                
-                valor = cliente.read_holding_registers( 0x0BC6, 2, unit=1 )
-                if valor:
-                  self.datos['READ_ADDRESS_CHARGE_TIME'] = self.regeneraFloat( valor )                
-                valor = cliente.read_holding_registers( 0x0BC7, 2, unit=1 )
-                if valor:
-                  self.datos['READ_ADDRESS_PWM_VALUE'] = self.regeneraFloat( valor )
-                valor = cliente.read_holding_registers( 0x0BC8, 2, unit=1 )
-                if valor:
-                  self.datos['READ_ADDRESS_HOUSE_POWER'] = self.regeneraFloat( valor )
-                valor = cliente.read_holding_registers( 0x0BC9, 2, unit=1 )
-                if valor:
-                  self.datos['READ_ADDRESS_FV_POWER'] = self.regeneraFloat( valor )
-                valor = cliente.read_holding_registers( 0x0BCA, 2, unit=1 )
-                if valor:
-                  self.datos['READ_ADDRESS_PAUSE'] = self.regeneraFloat( valor )
-
-                valor = cliente.read_holding_registers( 0x0BCB, 2, unit=1 )
-                if valor:
-                  self.datos['READ_ADDRESS_LOCK'] = self.regeneraFloat( valor )
-                valor = cliente.read_holding_registers( 0x0BCC, 2, unit=1 )
-                if valor:
-                  self.datos['READ_ADDRESS_PROMGRAM'] = self.regeneraFloat( valor )
-                valor = cliente.read_holding_registers( 0x0BCD, 2, unit=1 )
-                if valor:
-                  self.datos['READ_ADDRESS_INTENSITY'] = self.regeneraFloat( valor )
-                valor = cliente.read_holding_registers( 0x0BCE, 2, unit=1 )
-                if valor:
-                  self.datos['READ_ADDRESS_DYNAMIC'] = self.regeneraFloat( valor )
-                valor = cliente.read_holding_registers( 0x0BCF, 2, unit=1 )
-                if valor:
-                  self.datos['READ_ADDRESS_PAYMENT'] = self.regeneraFloat( valor )
-                valor = cliente.read_holding_registers( 0x0BD0, 2, unit=1 )
-                if valor:
-                  self.datos['READ_ADDRESS_OCPP'] = self.regeneraFloat( valor )                  
+                for direccion in list( self.dirs ):
+                  valor = cliente.read_holding_registers( self.dirs[direccion], 2, unit=1 )
+                  if valor:
+                    self.datos[direccion] = self.regeneraFloat( valor )
+                  
               else:
                 cliente = ModbusTcpClient( host=self.ip, port=502 )
                 connection = cliente.connect()                
