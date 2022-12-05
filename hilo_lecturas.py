@@ -25,13 +25,6 @@ class LecturaDatos(threading.Thread):
                   'READ_ADDRESS_LOCK': 0, 'READ_ADDRESS_PROMGRAM': 0, 'READ_ADDRESS_INTENSITY': 0,
                   'READ_ADDRESS_DYNAMIC': 0, 'READ_ADDRESS_PAYMENT': 0, 'READ_ADDRESS_OCPP': 0, 
                   'READ_ADDRESS_MIN_INTENSITY': 0, 'READ_ADDRESS_MAX_INTENSITY': 0}
-    
-    self.dirs  = {'READ_ADDRESS_CHARGE_STATE': 0x0BC2, 'READ_ADDRESS_CHARGE_POWER': 0x0BC3, 'READ_ADDRESS_CHARGE_ENERGY': 0x0BC4, 
-                  'READ_ADDRESS_SLAVE_ERROR': 0x0BC5, 'READ_ADDRESS_CHARGE_TIME': 0x0BC6, 'READ_ADDRESS_PWM_VALUE': 0x0BC7, 
-                  'READ_ADDRESS_HOUSE_POWER': 0x0BC8, 'READ_ADDRESS_FV_POWER': 0x0BC9, 'READ_ADDRESS_PAUSE': 0x0BCA,
-                  'READ_ADDRESS_LOCK': 0x0BCB, 'READ_ADDRESS_PROMGRAM': 0x0BCC, 'READ_ADDRESS_INTENSITY': 0x0BCD,
-                  'READ_ADDRESS_DYNAMIC': 0x0BCE, 'READ_ADDRESS_PAYMENT': 0x0BCF, 'READ_ADDRESS_OCPP': 0x0BD0,
-                  'READ_ADDRESS_MIN_INTENSITY': 0x0BD1, 'READ_ADDRESS_MAX_INTENSITY': 0x0BD2}
         
   def stop(self):
     self.isRunning = False
@@ -46,29 +39,43 @@ class LecturaDatos(threading.Thread):
     else:
         return None
 
-  def run(self):
-      try:
-        cliente = ModbusTcpClient( host=self.ip, port=502 )
-        connection = cliente.connect()
+  def divide(self, lista, num):
+    out = []
+    ultimo = 0.0
 
-        while self.isRunning:
-            time.sleep(5)
-            try:
-              if connection:
-                for direccion in list( self.dirs ):
-                  valor = cliente.read_holding_registers( self.dirs[direccion], 2, unit=1 )
-                  if valor:
-                    self.datos[direccion] = self.regeneraFloat( valor )
-                  
-              else:
-                cliente = ModbusTcpClient( host=self.ip, port=502 )
-                connection = cliente.connect()                
-            except Exception as e:
-                logger.error("Error en captura de datos: ")
-                logger.error(e)
-      except Exception as e:
-          logger.error("Fallo en la conexion: ")
-          logger.error(e)
+    while ultimo < len(lista):
+        out.append(lista[int(ultimo):int(ultimo + num)])
+        ultimo += num
+    return out
+
+  def run(self):
+    try:
+      cliente = ModbusTcpClient( host=self.ip, port=502 )
+      connection = cliente.connect()
+      time.sleep(2)
+
+      while self.isRunning:
+        time.sleep(10)
+        try:
+          if connection:
+            distancia = len( self.datos ) * 2
+            valor = cliente.read_holding_registers( 0x0BC2, distancia, unit=1 )
+            lista = self.divide( valor.registers, 2 )
+            posicion = 0
+            for direccion in list( self.datos ):
+              valor.registers = lista[posicion]
+              self.datos[direccion] = self.regeneraFloat( valor )
+              posicion += 1
+          else:
+            logger.error("Conexion perdida con V2C ")
+            cliente = ModbusTcpClient( host=self.ip, port=502 )
+            connection = cliente.connect()
+        except Exception as e:
+            logger.error("Error en captura de datos: ")
+            logger.error(e)
+    except Exception as e:
+      logger.error("Fallo en la conexion: ")
+      logger.error(e)
     
   def valores( self ):
     return self.datos

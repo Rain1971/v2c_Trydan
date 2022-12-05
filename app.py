@@ -10,6 +10,7 @@ CONTROLV2C_PORT     = 5002
 CONTROLV2C_DEBUG    = True
 # ------------------------------------------------------------------------
 
+
 datosV2C = LecturaDatos( IP_V2C )
 
 @app.route('/estado')
@@ -25,7 +26,8 @@ def inicio():
     return 'Control de estado para cargador V2C!'
 
 if __name__ == "__main__":
-    app.run( host = CONTROLV2C_HOSTNAME, 
-            port = CONTROLV2C_PORT, 
-            threaded = True,
-            debug = CONTROLV2C_DEBUG )
+
+  app.run( host = CONTROLV2C_HOSTNAME, 
+           port = CONTROLV2C_PORT, 
+           threaded = False,
+           debug = CONTROLV2C_DEBUG )
