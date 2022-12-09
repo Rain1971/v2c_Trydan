@@ -25,6 +25,16 @@ def estado():
     datosV2C = LecturaDatos( IP_V2C )
     return "No inicializado, refresca la página en unos segundos"
 
+@app.route('/json_estado')
+def json_estado():
+  global datosV2C
+  if datosV2C is not None:
+    datos   = datosV2C.valores()
+    return datos
+  else:
+    datosV2C = LecturaDatos( IP_V2C )
+    return "No inicializado, refresca la página en unos segundos"
+
 @app.route('/')
 def inicio():
   global datosV2C 
