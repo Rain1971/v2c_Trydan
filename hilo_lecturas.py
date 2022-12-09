@@ -60,7 +60,7 @@ class LecturaDatos(threading.Thread):
             if connection:
               distancia = len( self.datos ) * 2
               valor = cliente.read_holding_registers( 0x0BC2, distancia, unit=1 )
-              time.sleep(2)
+              time.sleep(10)
               if len(valor.registers) == distancia:
                 lista = self.divide( valor.registers, 2 )
                 posicion = 0

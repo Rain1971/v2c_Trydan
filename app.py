@@ -1,5 +1,6 @@
 from hilo_lecturas import LecturaDatos
 from flask import Flask
+from flask import jsonify
 
 app = Flask(__name__)
 
@@ -30,7 +31,7 @@ def json_estado():
   global datosV2C
   if datosV2C is not None:
     datos   = datosV2C.valores()
-    return datos
+    return jsonify(datos)
   else:
     datosV2C = LecturaDatos( IP_V2C )
     return "No inicializado, refresca la página en unos segundos"
