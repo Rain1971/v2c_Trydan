@@ -28,3 +28,6 @@ pip3 install -r requirements.txt
 ## Uso <a name = "usage"></a>
 
 python3 app.py
+Se accede a los valores desde un navegador con direcciones:
+      http://ip:5002/json_estado  <- Retorna un json con los valores actuales
+      http://ip:5002/estado       <- Retorna web simple con los valores actuales
