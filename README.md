@@ -13,21 +13,21 @@ Pretendo tener control del cargador V2C trydan para hacer un mejor control de ex
 
 Estas instruccines pretenden ser una pequeña ayuda. Mira [deployment](#deployment) Para ver como iniciar.
 
-### Prerequisites
+### Prerequisitos
 
 Necesitas tener git, python3, source, venv y pip.
 
 ### Instalar
 
-git clone https://github.com/Rain1971/v2c_Trydan.git
-cd v2c_Trydan
-python3 -m venv venv
-source venv/bin/activate
-pip3 install -r requirements.txt
+<p>git clone https://github.com/Rain1971/v2c_Trydan.git</p>
+<p>cd v2c_Trydan</p>
+<p>python3 -m venv venv</p>
+<p>source venv/bin/activate</p>
+<p>pip3 install -r requirements.txt</p>
 
 ## Uso <a name = "usage"></a>
 
-python3 app.py
-Se accede a los valores desde un navegador con direcciones:
-      http://ip:5002/json_estado  <- Retorna un json con los valores actuales
-      http://ip:5002/estado       <- Retorna web simple con los valores actuales
+<p>python3 app.py</p>
+<p>Se accede a los valores desde un navegador con direcciones:</p>
+      <p>http://ip:5002/json_estado  <- Retorna un json con los valores actuales</p>
+      <p>http://ip:5002/estado       <- Retorna web simple con los valores actuales</p>
