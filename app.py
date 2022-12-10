@@ -8,39 +8,26 @@ app = Flask(__name__)
 IP_V2C              = '10.48.130.141'
 CONTROLV2C_HOSTNAME = '0.0.0.0'
 CONTROLV2C_PORT     = 5002
-CONTROLV2C_DEBUG    = True
+CONTROLV2C_DEBUG    = False
 # ------------------------------------------------------------------------
 
-datosV2C = None
+datosV2C = LecturaDatos( IP_V2C )
 
 @app.route('/estado')
 def estado():
-  global datosV2C
-  if datosV2C is not None:
-    datos   = datosV2C.valores()
-    cadena  = ""
-    for parametro in list( datos ):
-      cadena += '<p> {}: {} </p>'.format( parametro, datos[parametro] )
-    return cadena
-  else:
-    datosV2C = LecturaDatos( IP_V2C )
-    return "No inicializado, refresca la página en unos segundos"
+  datos   = datosV2C.valores()
+  cadena  = ""
+  for parametro in list( datos ):
+    cadena += '<p> {}: {} </p>'.format( parametro, datos[parametro] )
+  return cadena
 
 @app.route('/json_estado')
 def json_estado():
-  global datosV2C
-  if datosV2C is not None:
-    datos   = datosV2C.valores()
-    return jsonify(datos)
-  else:
-    datosV2C = LecturaDatos( IP_V2C )
-    return "No inicializado, refresca la página en unos segundos"
+  datos   = datosV2C.valores()
+  return jsonify(datos)
 
 @app.route('/')
 def inicio():
-  global datosV2C 
-  if datosV2C is None:
-    datosV2C = LecturaDatos( IP_V2C )
   return 'Control de estado para cargador V2C!'
 
 
