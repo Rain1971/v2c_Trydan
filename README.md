@@ -11,13 +11,13 @@ Pretendo tener control del cargador V2C trydan para hacer un mejor control de ex
 
 ## Como empezar <a name = "getting_started"></a>
 
-Estas instruccines pretenden ser una pequeña ayuda. Mira [deployment](#deployment) Para ver como iniciar.
+Estas instruccines pretenden ser una pequeña ayuda. Mira [instalar](#instalar) Para ver como iniciar.
 
 ### Prerequisitos
 
 Necesitas tener git, python3, source, venv y pip.
 
-### Instalar
+### Instalar <a name = "deployment"></a>
 
 <p>git clone https://github.com/Rain1971/v2c_Trydan.git</p>
 <p>cd v2c_Trydan</p>
