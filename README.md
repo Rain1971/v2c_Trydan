@@ -26,8 +26,16 @@ Necesitas tener git, python3, source, venv y pip.
 <p>pip3 install -r requirements.txt</p>
 
 ## Uso <a name = "usage"></a>
-
+<p>modifica el fichero sistema.py y pon la IP local de tu Trydan, el DEVICE_ID/APIKEY si quieres remoto</p>
+<p>EJECUTAR EN LINEA DE COMANDO PARA DATOS SACADO EN RED LOCAL</p>
 <p>python3 app.py</p>
+<p>Se accede a los valores desde un navegador con direcciones:</p>
+<p></p>
+      <p>http://ip:5002/json_estado  <- Retorna un json con los valores actuales</p>
+      <p>http://ip:5002/estado       <- Retorna web simple con los valores actuales</p>
+<p></p>
+<p>EJECUTAR EN LINEA DE COMANDO PARA DATOS SACADO EN RED LOCAL</p>
+<p>python3 app_remoto.py</p>
 <p>Se accede a los valores desde un navegador con direcciones:</p>
       <p>http://ip:5002/json_estado  <- Retorna un json con los valores actuales</p>
       <p>http://ip:5002/estado       <- Retorna web simple con los valores actuales</p>
