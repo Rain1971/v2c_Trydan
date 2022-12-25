@@ -1,7 +1,9 @@
-from hilo_lecturas_remotas import LecturaDatos
+from hilo_lecturas_http import LecturaDatos
 from flask import Flask
 from flask import jsonify
-from secreto import DEVICE_ID, APIKEY
+from sistema import IP_V2C
+
+app = Flask(__name__)
 
 # --------------------- DATOS SISTEMA ------------------------------------
 CONTROLV2C_HOSTNAME = '0.0.0.0'
@@ -9,9 +11,7 @@ CONTROLV2C_PORT     = 5002
 CONTROLV2C_DEBUG    = False
 # ------------------------------------------------------------------------
 
-app = Flask(__name__)
-
-datosV2C = LecturaDatos( DEVICE_ID, APIKEY )
+datosV2C = LecturaDatos( IP_V2C )
 
 @app.route('/estado')
 def estado():
